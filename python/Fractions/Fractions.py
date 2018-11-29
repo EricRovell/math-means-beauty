@@ -3,18 +3,23 @@ class Fraction(object):
   # constructor
   def __init__(self, numerator, denominator = None):
 
-    # string
+    # from integer
+    if isinstance(numerator, int) and denominator == None:
+      self.numerator = numerator
+      self.denominator = 1
+
+    # from string
     if isinstance(numerator, str) and denominator == None:
       fraction = numerator
       # integer-part
       unit = 0 if fraction[0] == '.' else int(fraction[0])
 
-      # 'numerator/denominator'
+      # from 'numerator/denominator' string
       if '/' in fraction:
         self.numerator = int( numerator[ : numerator.index('/')] )
         self.denominator = int( numerator[numerator.index('/') + 1 : ] )
 
-      # '0.02(25)' -> periodic decimal
+      # from '0.02(25)' periodic decimal
       elif '(' and ')' in fraction:
       # the fraction is periodic
         period = fraction[fraction.index( '(' ) + 1 : fraction.index( ')' )]
@@ -28,7 +33,7 @@ class Fraction(object):
         if unit != 0:
           self.numerator += unit * self.denominator
 
-      # non-periodic decimal
+      # from non-periodic decimal
       else:
         mantissa = fraction[fraction.index('.') + 1 :]
         numerator = int(mantissa)
@@ -38,12 +43,12 @@ class Fraction(object):
         self.numerator = numerator
         self.denominator = denominator
 
-    # tuple -> (int, int)    
+    # from tuple -> (int, int)    
     elif isinstance(numerator, int) and isinstance(denominator, int):
       self.numerator = numerator
       self.denominator = denominator if denominator != None else 1
 
-    # float -> rational
+    # from float -> rational
     elif isinstance(numerator, float) and denominator == None:
       fraction = str(numerator) # temp
       # strings
@@ -53,7 +58,7 @@ class Fraction(object):
       self.numerator = int(unit) * (10 ** len(fraction)) + int(fraction)
       self.denominator = int( 10 ** len(fraction) )
 
-    # zero division check
+    # ! zero division check
     if self.denominator == 0: raise ZeroDivisionError()
     # simplify the fraction
     self.simplify()
@@ -71,6 +76,18 @@ class Fraction(object):
   def lcm(a, b):
     return a * b // Fraction.gcd(a, b)
 
+  # numerator setter
+  def set_numerator(self, numerator):
+    self.numerator = numerator
+
+  # denominator setter
+  def set_denominator(self, denominator):
+    self.denominator = denominator
+
+  # sets fraction to it's reciprocal
+  def set_reciprocal(self):
+    self.numerator, self.denominator = self.denominator, self.numerator
+
   # returns fraction
   def get_fraction(self):
     return self.numerator, self.denominator
@@ -83,6 +100,7 @@ class Fraction(object):
   def get_denominator(self):
     return self.denominator
 
+  # constructs and returns the decimal form as float
   def get_decimal(self, limit = None, get_period = False):
     unit = self.numerator // self.denominator
     # long-division
@@ -121,8 +139,28 @@ class Fraction(object):
 
     return float(decimal)
   
+  # returns a period of the fraction
+  # returns 0 if period is absent
   def get_period(self):
     return self.get_decimal(get_period = True)
+
+  def get_reciprocal(self):
+    return self.denominator, self.numerator
+
+
+  # is the fraction proper / improper?
+  def is_proper(self):
+    return True if self.numerator < self.denominator else False
+  def is_improper(self):
+    return True if self.numerator > self.denominator else True
+
+  # is the given fraction equal to another?
+  def is_equal(self, fraction):
+    if self.numerator == fraction.numerator:
+      if self.denominator == fraction.denominator:
+        return True
+      else:
+        return False
 
   # simplifies the fraction
   def simplify(self):
@@ -292,5 +330,3 @@ class Fraction(object):
     return Fraction._to_decimal(numerator, denominator, get_period = True)
 
 
-p = Fraction('2.02(78)')
-print(p.get_period())
