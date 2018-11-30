@@ -330,3 +330,5 @@ class Fraction(object):
     return Fraction._to_decimal(numerator, denominator, get_period = True)
 
 
+p = Fraction('0.01')
+print(p.get_fraction())
