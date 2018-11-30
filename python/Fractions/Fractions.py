@@ -76,6 +76,10 @@ class Fraction(object):
   def lcm(a, b):
     return a * b // Fraction.gcd(a, b)
 
+  # fraction setter
+  def set_fraction(self, fraction):
+    self.numerator, self.denominator = fraction[0], fraction[1]
+
   # numerator setter
   def set_numerator(self, numerator):
     self.numerator = numerator
@@ -91,6 +95,10 @@ class Fraction(object):
   # returns fraction
   def get_fraction(self):
     return self.numerator, self.denominator
+
+  # returns the reciprocal
+  def get_reciprocal(self):
+    return self.denominator, self.numerator
 
   # returns numerator's value
   def get_numerator(self):
@@ -143,9 +151,6 @@ class Fraction(object):
   # returns 0 if period is absent
   def get_period(self):
     return self.get_decimal(get_period = True)
-
-  def get_reciprocal(self):
-    return self.denominator, self.numerator
 
 
   # is the fraction proper / improper?
