@@ -1,4 +1,5 @@
-def method(number, precision):
+# babylonian method: sqrt
+def sqrt(number, precision):
   initial_guess = number / 2
   difference = 1
 
@@ -8,6 +9,7 @@ def method(number, precision):
     initial_guess = guess
 
   guess = str(guess)
-  return str(guess)[ : guess.index('.') + len(str(precision)) - 1]
+  return float( guess[ : guess.index('.') + len(str(precision)) - 1] )
 
-print(method(1021113, 0.0001))
+# tests
+print(sqrt(1021113, 0.0001))
