@@ -1,8 +1,10 @@
 // '0.02(35)' -> rational representation
-function toRational(decimal) {
-  // argument must be a string
-  if (typeof decimal !== 'string') {
-    return None;
+function toRational(number) {
+  
+  if (typeof(decimal) !== 'string') {
+    var decimal = number.toString();
+  } else {
+    var decimal = arguments[0];
   }
 
   let unit = (decimal[0] === '.') ? 0 : decimal.slice(0, decimal.indexOf('.'));
@@ -31,4 +33,4 @@ function toRational(decimal) {
   return [numerator, denominator];
 }
 
-console.log(toRational('1.351'))
+console.log(toRational(20.01))
