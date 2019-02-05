@@ -1,21 +1,14 @@
 # returns the greatest common divisor
-def gcd(*numbers):
-  # Euclid's algorithm
-  def _gcd_(a, b):
-    while b:
-      a, b = b, a % b
-    return a
+def gcd(a, b):
+  if a < b: return gcd(b, a)
+  while b:
+    a, b = b, a % b
+  return a
 
-  # gcd(a, b, c) = gcd( gcd(a, b), c )
-  result = numbers[0]
-  for number in numbers[1:]:
-    result = _gcd_(result, number)
-  return result
+# returns the least common multiple
+def lcm(a, b):
+  return a * b // gcd(a, b)
 
-
-# returns the largest common multiple
-def lcm(*numbers):
-  result = numbers[0]
-  for number in numbers[1:]:
-    result = result * number // gcd(result, number)
-  return result
+# evaluates if the numbers are coprime
+def iscoprime(a, b):
+  return gcd(a, b) == 1
