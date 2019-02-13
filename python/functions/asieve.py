@@ -5,9 +5,8 @@ def asieve(limit):
   sieve[2:4] = (True, True)
 
   # preliminary work
-  x = 1
+  x, y = 1, 1
   while x**2 < limit:
-    y = 1
     while y**2 < limit:
 
       n = 4 * x**2 + y**2
@@ -24,7 +23,7 @@ def asieve(limit):
           sieve[n] = not sieve[n]
 
       y += 1
-    x += 1
+    x, y = x + 1, 1
     
   # remove the squares of primes (and their multiples)
   r = 5
@@ -38,4 +37,4 @@ def asieve(limit):
   return [value for value, isprime in enumerate(sieve) if isprime]
 
 # tests
-print(len(asieve(10000)))
+print(len(asieve(1000000)))
