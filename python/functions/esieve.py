@@ -6,5 +6,8 @@ def esieve(limit):
   for number, isprime in enumerate(numbers):
     if isprime:
       yield number
+      if number ** 2 > limit: continue
       for multiple in range(number * number, limit, number):
         numbers[multiple] = False
+
+print(len(list(esieve(10000000))))
