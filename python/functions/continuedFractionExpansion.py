@@ -27,3 +27,30 @@ def expansion(number):
     sequence.append(addendum)
 
   return sequence
+
+# returns the desired rational approximation of sqrt(number)
+def approximation(number, order, expansion):
+  seed, *period = expansion(number)
+
+  # returns a periodic list of desired length 
+  def cycle(iterable, order):
+    numbers = [seed]
+    while True:
+      for addendum in period:
+        if len(numbers) >= order:
+          return numbers[::-1]
+        numbers.append(addendum)
+
+  seed, *addenda = cycle(period, order)
+  numerator, denominator = 1, seed 
+  for addendum in addenda:
+    numerator += addendum * denominator
+    denominator = denominator
+    # get the reciprocal
+    numerator, denominator = denominator, numerator
+
+  # to get the final answer we should get the reciprocal
+  return denominator, numerator
+
+# tests
+print(approximation(20, 5, expansion))
